@@ -13,7 +13,6 @@ public class QuestionManager : MonoBehaviour {
     private const string ENDGAMETEXT50 = "Congratulations !";
     private const string ENDGAMETEXT00 = "Loser !";
 
-
     public void InitializeQuestions()
     {
         questionsLeft = new List<GameObject>(questions);

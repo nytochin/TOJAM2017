@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour {
     public int[] choicePlayers;
     public int currentQuestionIndex;
     public bool answeringState = false;
+    public GameObject image;
 
     private const string STARTGAME = "StartGame";
     private const string ENDGAME = "EndGame";
@@ -98,10 +99,17 @@ public class GameManager : MonoBehaviour {
     }
 
     public void DisplayNextQuestion()
-    {        
+    {
+
+
         currentQuestionIndex++; // for the first iteration, goes from -1 to 0
         if (currentQuestionIndex < numberGameQuestions)
-        {           
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                GameObject child = answersUI.transform.GetChild(i).gameObject;
+                child.SetActive(false);
+            }
             currentQuestion = questionManager.GetRandomQuestion();
             
             QuestionInfo qInfo = currentQuestion.GetComponent<QuestionInfo>();
@@ -109,11 +117,7 @@ public class GameManager : MonoBehaviour {
             {
                 // Text type question
                 questionUI.GetComponentInChildren<Text>().text = qInfo.question;
-                for (int i = 0; i < 4; i++)
-                {
-                    GameObject child = answersUI.transform.GetChild(i).gameObject;
-                    child.SetActive(false);
-                }
+
                 for (int i = 0; i < qInfo.answers.Length; i++)
                 {
                     GameObject child = answersUI.transform.GetChild(i).gameObject;
@@ -132,7 +136,21 @@ public class GameManager : MonoBehaviour {
                 questionManager.GetComponent<AudioSource>().PlayDelayed(1); // Play with one second delay                
                 coroutine = WaitForAudioToEnd(timeAudio, qInfo);
                 StartCoroutine(coroutine);
-            }                    
+            } else if (currentQuestion.GetComponent<QuestionInfo>().type == IMAGE)
+            {
+                // Image type question
+                questionUI.GetComponentInChildren<Text>().text = qInfo.question;
+                image.GetComponent<SpriteRenderer>().sprite = qInfo.GetComponent<SpriteRenderer>().sprite;
+
+                for (int i = 0; i < qInfo.answers.Length; i++)
+                {
+                    GameObject child = answersUI.transform.GetChild(i).gameObject;
+                    child.SetActive(true);
+                    child.GetComponent<Text>().text = qInfo.answers[i];
+                }
+                // Text all displayed : the player can now answer
+                answeringState = true;
+            }
         } else
         {
             answeringState = false;
@@ -144,11 +162,6 @@ public class GameManager : MonoBehaviour {
     private IEnumerator WaitForAudioToEnd(float timeAudio, QuestionInfo qInfo)
     {
         yield return new WaitForSeconds(timeAudio);
-        for (int i = 0; i < 4; i++)
-        {
-            GameObject child = answersUI.transform.GetChild(i).gameObject;
-            child.SetActive(false);
-        }
         for (int i = 0; i < qInfo.answers.Length; i++)
         {
             GameObject child = answersUI.transform.GetChild(i).gameObject;
@@ -164,6 +177,7 @@ public class GameManager : MonoBehaviour {
         if (AllChoicePlayersSelected() && answeringState)
         {
             answeringState = false;
+            image.GetComponent<SpriteRenderer>().sprite = null;
             questionManager.SaveAnswers(currentQuestionIndex, choicePlayers);
             questionManager.UpdateScore();
             Debug.Log(questionManager.scores[0]);
