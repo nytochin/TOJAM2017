@@ -9,7 +9,8 @@ public class QuestionManager : MonoBehaviour {
     public float[] scores;
 
     private List<GameObject> questionsLeft;
-    private int[][] answersPlayers; // [number of questions][number of players]
+    private int[][] answersPlayersPlayer1Guesses; // [number of questions][number of players]
+    private int[][] answersPlayersPlayer2Guesses; // [number of questions][number of players]
     private const string ENDGAMETEXT50 = "Congratulations !";
     private const string ENDGAMETEXT00 = "Loser !";
 
@@ -23,15 +24,19 @@ public class QuestionManager : MonoBehaviour {
 
     public void InitializeAnswerArray(int numberGameQuestions, int numberPlayers)
     {
-        answersPlayers = new int[numberGameQuestions][];
+        answersPlayersPlayer1Guesses = new int[numberGameQuestions][];
+        answersPlayersPlayer2Guesses = new int[numberGameQuestions][];
         for (int i = 0; i < numberGameQuestions; i++)
         {
-            int[] subArray = new int[numberPlayers];
-            for (int j = 0; j < subArray.Length; j++)
+            int[] subArray1 = new int[numberPlayers];
+            int[] subArray2 = new int[numberPlayers];
+            for (int j = 0; j < subArray1.Length; j++)
             {
-                subArray[j] = -1;
+                subArray1[j] = -1;
+                subArray2[j] = -1;
             }
-            answersPlayers[i] = subArray;
+            answersPlayersPlayer1Guesses[i] = subArray1;
+            answersPlayersPlayer2Guesses[i] = subArray2;
         }
     }
 
@@ -44,20 +49,28 @@ public class QuestionManager : MonoBehaviour {
         return questionSelected;
     }
 
-    public float GetScoreTwoPlayers()
+    public float[] GetScoreTwoPlayers() // return score of good guesses of player 1 and score or good guesses of player 2
     {
-        int correctGuesses = 0;
+        int correctGuessesPlayer1 = 0;
+        int correctGuessesPlayer2 = 0;
+        float[] scores = new float[2];
         int numberQuestions = GameManager.GM.currentQuestionIndex + 1; // because currentQuestionIndex starts at 0
         for (int i = 0; i < numberQuestions; i++)
         {
             
-            if (answersPlayers[i][0] == answersPlayers[i][1])
+            if (answersPlayersPlayer1Guesses[i][0] == answersPlayersPlayer1Guesses[i][1])
             {
-                correctGuesses++;
+                correctGuessesPlayer1++;
             }
-            
+            if (answersPlayersPlayer2Guesses[i][0] == answersPlayersPlayer2Guesses[i][1])
+            {
+                correctGuessesPlayer2++;
+            }
+
         }
-        return (float)correctGuesses / numberQuestions * 100.0f;
+        scores[0] = (float)correctGuessesPlayer1 / numberQuestions * 100.0f;
+        scores[1] = (float)correctGuessesPlayer2 / numberQuestions * 100.0f;
+        return scores;
     }
 
     public float[] GetScoreFourPlayers()
@@ -69,11 +82,11 @@ public class QuestionManager : MonoBehaviour {
         for (int i = 0; i < numberQuestions; i++)
         {
 
-            if (answersPlayers[i][0] == answersPlayers[i][1])
+            if (answersPlayersPlayer1Guesses[i][0] == answersPlayersPlayer1Guesses[i][1])
             {
                 correctGuessesPair1++;
             }
-            if (answersPlayers[i][2] == answersPlayers[i][3])
+            if (answersPlayersPlayer1Guesses[i][2] == answersPlayersPlayer1Guesses[i][3])
             {
                 correctGuessesPair2++;
             }
@@ -84,10 +97,19 @@ public class QuestionManager : MonoBehaviour {
         return scores; 
     }
 
-    public void SaveAnswers(int currentQuestionIndex, int[] choicePlayers) {
-        for (int i = 0; i < choicePlayers.Length; i++)
+    public void SaveAnswers(int currentQuestionIndex, int[] choicePlayers, bool player1IsGuessing) {
+        if (player1IsGuessing)
         {
-            answersPlayers[currentQuestionIndex][i] = choicePlayers[i];
+            for (int i = 0; i < choicePlayers.Length; i++)
+            {
+                answersPlayersPlayer1Guesses[currentQuestionIndex][i] = choicePlayers[i];
+            }
+        } else
+        {
+            for (int i = 0; i < choicePlayers.Length; i++)
+            {
+                answersPlayersPlayer2Guesses[currentQuestionIndex][i] = choicePlayers[i];
+            }
         }
     }
 
@@ -114,7 +136,9 @@ public class QuestionManager : MonoBehaviour {
     {
         if (GameManager.GM.numberPlayers == 2)
         {
-            scores[0] = GetScoreTwoPlayers();
+            float[] sc = GetScoreTwoPlayers();
+            scores[0] = sc[0];
+            scores[1] = sc[1];
         } else if (GameManager.GM.numberPlayers == 4)
         {
             scores = GetScoreFourPlayers();

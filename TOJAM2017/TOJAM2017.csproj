@@ -87,6 +87,7 @@
     <Compile Include="Assets\Maksim\AmbiancePackage\ShakeCubes.cs" />
     <Compile Include="Assets\Scripts\ControllerManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\LoadOnStart.cs" />
     <Compile Include="Assets\Scripts\QuestionInfo.cs" />
     <Compile Include="Assets\Scripts\QuestionManager.cs" />
   </ItemGroup>

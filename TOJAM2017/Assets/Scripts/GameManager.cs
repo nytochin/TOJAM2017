@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour {
     public int currentQuestionIndex;
     public bool answeringState = false;
     public GameObject image;
+    public bool player1IsGuessing;
 
     private const string STARTGAME = "StartGame";
     private const string ENDGAME = "EndGame";
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour {
     private const string AUDIO = "audio";
     private const string IMAGE = "image";
     private IEnumerator coroutine;
+    private float SPEEDTEXT = 0.02f;
 
     public void Awake()
     {
@@ -51,6 +53,7 @@ public class GameManager : MonoBehaviour {
 
     public void StartQuiz()
     {
+        player1IsGuessing = true;
         answeringState = false;
         // Initialize Question Manager
         questionManager.InitializeQuestions();
@@ -86,81 +89,133 @@ public class GameManager : MonoBehaviour {
                 answersUI.SetActive(false);
                 // Activate score UI
                 scoreUI.SetActive(true);
-                scoreUI.GetComponentInChildren<Text>().text = "Score : " + questionManager.scores[0]+ "%"; // Two players
-                                                                                                                       // Activate end game panel
+                scoreUI.GetComponentInChildren<Text>().text = "Player 1 Score : " + questionManager.scores[0]+ "% - " + "Player 2 Score : " + questionManager.scores[1] + "%"; // Two players score
+                // Activate end game panel
                 EndGamePanel.SetActive(true);
                 GameObject endGameText = EndGamePanel.transform.FindChild("EndGameText").gameObject;
                 endGameText.GetComponent<Text>().text = questionManager.GetEndGameTextByScore();
             } else if (numberPlayers == 4)
             {
-
+                // TO DO
             }
         }
     }
 
     public void DisplayNextQuestion()
     {
-
-
-        currentQuestionIndex++; // for the first iteration, goes from -1 to 0
-        if (currentQuestionIndex < numberGameQuestions)
+        if (player1IsGuessing)
         {
-            for (int i = 0; i < 4; i++)
-            {
-                GameObject child = answersUI.transform.GetChild(i).gameObject;
-                child.SetActive(false);
-            }
+            currentQuestionIndex++; // for the first iteration, goes from -1 to 0 - go to next question if turn of player 1 again
             currentQuestion = questionManager.GetRandomQuestion();
-            
-            QuestionInfo qInfo = currentQuestion.GetComponent<QuestionInfo>();
-            if (currentQuestion.GetComponent<QuestionInfo>().type == TEXT)
-            {
-                // Text type question
-                questionUI.GetComponentInChildren<Text>().text = qInfo.question;
 
-                for (int i = 0; i < qInfo.answers.Length; i++)
+            if (currentQuestionIndex < numberGameQuestions)
+            {
+                // Reset question and answers and image
+                for (int i = 0; i < 4; i++)
                 {
                     GameObject child = answersUI.transform.GetChild(i).gameObject;
-                    child.SetActive(true);
-                    child.GetComponent<Text>().text = qInfo.answers[i];
+                    child.SetActive(false);
                 }
-                // Text all displayed : the player can now answer
-                answeringState = true;
-            } else if (currentQuestion.GetComponent<QuestionInfo>().type == AUDIO)
-            {
-                // Audio type question
-                questionUI.GetComponentInChildren<Text>().text = qInfo.question;
-                AudioSource audio = qInfo.GetComponent<AudioSource>();
-                questionManager.GetComponent<AudioSource>().clip = audio.clip;
-                float timeAudio = questionManager.GetComponent<AudioSource>().clip.length + 2.0f;
-                questionManager.GetComponent<AudioSource>().PlayDelayed(1); // Play with one second delay                
-                coroutine = WaitForAudioToEnd(timeAudio, qInfo);
-                StartCoroutine(coroutine);
-            } else if (currentQuestion.GetComponent<QuestionInfo>().type == IMAGE)
-            {
-                // Image type question
-                questionUI.GetComponentInChildren<Text>().text = qInfo.question;
-                image.GetComponent<SpriteRenderer>().sprite = qInfo.GetComponent<SpriteRenderer>().sprite;
+                questionUI.GetComponentInChildren<Text>().text = "";
+                image.GetComponent<SpriteRenderer>().sprite = null;
 
-                for (int i = 0; i < qInfo.answers.Length; i++)
+                QuestionInfo qInfo = currentQuestion.GetComponent<QuestionInfo>();
+                if (currentQuestion.GetComponent<QuestionInfo>().type == TEXT)
                 {
-                    GameObject child = answersUI.transform.GetChild(i).gameObject;
-                    child.SetActive(true);
-                    child.GetComponent<Text>().text = qInfo.answers[i];
+                    // Text type question
+                    coroutine = Text(qInfo);
+                    StartCoroutine(coroutine);
+                    //questionUI.GetComponentInChildren<Text>().text = qInfo.question;
+
                 }
-                // Text all displayed : the player can now answer
-                answeringState = true;
+                else if (currentQuestion.GetComponent<QuestionInfo>().type == AUDIO)
+                {
+                    // Audio type question                    
+                    coroutine = Audio(qInfo);
+                    StartCoroutine(coroutine);
+                }
+                else if (currentQuestion.GetComponent<QuestionInfo>().type == IMAGE)
+                {
+                    // Image type question
+                    coroutine = Image(qInfo);
+                    StartCoroutine(coroutine);
+                }
             }
-        } else
+            else
+            {
+                answeringState = false;
+                Debug.Log("Game over");
+                SetUIState(ENDGAME);
+            }
+        }  else
         {
-            answeringState = false;
-            Debug.Log("Game over");
-            SetUIState(ENDGAME);            
-        }
+            answeringState = true;
+        }    
     }
 
-    private IEnumerator WaitForAudioToEnd(float timeAudio, QuestionInfo qInfo)
+    private IEnumerator Image(QuestionInfo qInfo)
     {
+        foreach (char letter in qInfo.question.ToCharArray())
+        {
+            questionUI.GetComponentInChildren<Text>().text += letter;
+            //if (typeSound1 && typeSound2)
+            //{
+            //    SoundManager.instance.RandomizeSfx(typeSound1, typeSound2);
+            //}
+            yield return 0;
+            yield return new WaitForSeconds(SPEEDTEXT);
+        }
+        image.GetComponent<SpriteRenderer>().sprite = qInfo.GetComponent<SpriteRenderer>().sprite;
+
+        for (int i = 0; i < qInfo.answers.Length; i++)
+        {
+            GameObject child = answersUI.transform.GetChild(i).gameObject;
+            child.SetActive(true);
+            child.GetComponent<Text>().text = qInfo.answers[i];
+        }
+        // Text all displayed : the player can now answer
+        answeringState = true;
+    }
+
+    private IEnumerator Text(QuestionInfo qInfo)
+    {
+        foreach (char letter in qInfo.question.ToCharArray())
+        {
+            questionUI.GetComponentInChildren<Text>().text += letter;
+            //if (typeSound1 && typeSound2)
+            //{
+            //    SoundManager.instance.RandomizeSfx(typeSound1, typeSound2);
+            //}
+            yield return 0;
+            yield return new WaitForSeconds(SPEEDTEXT);
+        }
+        for (int i = 0; i < qInfo.answers.Length; i++)
+        {
+            GameObject child = answersUI.transform.GetChild(i).gameObject;
+            child.SetActive(true);
+            child.GetComponent<Text>().text = qInfo.answers[i];
+        }
+        // Text all displayed : the player can now answer
+        answeringState = true;
+    }
+
+    private IEnumerator Audio(QuestionInfo qInfo)
+    {
+        // Audio type question
+        foreach (char letter in qInfo.question.ToCharArray())
+        {
+            questionUI.GetComponentInChildren<Text>().text += letter;
+            //if (typeSound1 && typeSound2)
+            //{
+            //    SoundManager.instance.RandomizeSfx(typeSound1, typeSound2);
+            //}
+            yield return 0;
+            yield return new WaitForSeconds(SPEEDTEXT);
+        }
+        AudioSource audio = qInfo.GetComponent<AudioSource>();
+        questionManager.GetComponent<AudioSource>().clip = audio.clip;
+        float timeAudio = questionManager.GetComponent<AudioSource>().clip.length + 2.0f;
+        questionManager.GetComponent<AudioSource>().PlayDelayed(1); // Play with one second delay  
         yield return new WaitForSeconds(timeAudio);
         for (int i = 0; i < qInfo.answers.Length; i++)
         {
@@ -176,15 +231,15 @@ public class GameManager : MonoBehaviour {
     {
         if (AllChoicePlayersSelected() && answeringState)
         {
-            answeringState = false;
-            image.GetComponent<SpriteRenderer>().sprite = null;
-            questionManager.SaveAnswers(currentQuestionIndex, choicePlayers);
+            answeringState = false;            
+            questionManager.SaveAnswers(currentQuestionIndex, choicePlayers, player1IsGuessing);
             questionManager.UpdateScore();
             Debug.Log(questionManager.scores[0]);
             Debug.Log("Choices saved");
             // Animation - put the chairs back to normal
             // ...
-            ResetChoicePlayers();            
+            ResetChoicePlayers();
+            player1IsGuessing = !player1IsGuessing;
             DisplayNextQuestion();
         }
     }
