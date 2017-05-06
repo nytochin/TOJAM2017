@@ -13,8 +13,10 @@ public class GameManager : MonoBehaviour {
     public int numberGameQuestions;
     public GameObject questionUI;
     public GameObject answersUI;
+    public GameObject scoreUI;
     public ControllerManager controllerManager;
     public GameObject currentQuestion;
+    public int[] choicePlayers;
 
     private int currentQuestionIndex;
 
@@ -37,23 +39,37 @@ public class GameManager : MonoBehaviour {
         currentQuestionIndex = 0;
         // Initialize Controller Manager
         controllerManager.SearchForControllers();
-        controllerManager.ResetChoicePlayers();
+        // Initialize choicePlayers array
+        choicePlayers = new int[controllerManager.controllersNumber.Length];
+        ResetChoicePlayers();
         questionManager.InitializeAnswerArray(numberGameQuestions, controllerManager.controllersNumber.Length);
-
+        // Display the first question
         DisplayNextQuestion();
     }
 
     public void DisplayNextQuestion()
     {
-        currentQuestion = questionManager.GetRandomQuestion();
-        QuestionInfo qInfo = currentQuestion.GetComponent<QuestionInfo>();
-        // Display the question and the answers in the UI
-        questionUI.GetComponentInChildren<Text>().text = qInfo.question;
-        for (int i = 0; i < qInfo.answers.Length; i++)
+        if (currentQuestionIndex < numberGameQuestions)
         {
-            GameObject child = answersUI.transform.GetChild(i).gameObject;
-            child.SetActive(true);
-            child.GetComponent<Text>().text = qInfo.answers[i];
+            currentQuestion = questionManager.GetRandomQuestion();
+            QuestionInfo qInfo = currentQuestion.GetComponent<QuestionInfo>();
+            // Display the question and the answers in the UI
+            questionUI.GetComponentInChildren<Text>().text = qInfo.question;
+            for (int i = 0; i < qInfo.answers.Length; i++)
+            {
+                GameObject child = answersUI.transform.GetChild(i).gameObject;
+                child.SetActive(true);
+                child.GetComponent<Text>().text = qInfo.answers[i];
+            }
+        } else
+        {
+            Debug.Log("Game over");
+            // Deactivate question panel and answers panel
+            questionUI.SetActive(false);
+            answersUI.SetActive(false);
+            // Activate score panel
+            scoreUI.SetActive(true);
+            scoreUI.GetComponentInChildren<Text>().text = "Score : " + questionManager.GetScoreTwoPlayers() + "%";
         }
     }
 
@@ -61,9 +77,13 @@ public class GameManager : MonoBehaviour {
     {
         if (AllChoicePlayersSelected())
         {
-            questionManager.SaveAnswers(currentQuestionIndex, controllerManager.choicePlayers);
+            questionManager.SaveAnswers(currentQuestionIndex, choicePlayers);
             Debug.Log("Choices saved");
-            // Reset choices : TO DO
+            // Animation - put the chairs back to normal
+            // ...
+            ResetChoicePlayers();
+            currentQuestionIndex++;
+            DisplayNextQuestion();
         }
     }
 
@@ -72,11 +92,19 @@ public class GameManager : MonoBehaviour {
     {
         for (int i = 0; i < controllerManager.controllersNumber.Length; i++)
         {
-            if (controllerManager.choicePlayers[i] == -1)
+            if (choicePlayers[i] == -1)
             {
                 return false;
             }
         }
         return true;
+    }
+
+    public void ResetChoicePlayers()
+    {
+        for (int i = 0; i < controllerManager.controllersNumber.Length; i++)
+        {
+            choicePlayers[i] = -1;
+        }
     }
 }

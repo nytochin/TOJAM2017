@@ -38,17 +38,44 @@ public class QuestionManager : MonoBehaviour {
         return questionSelected;
     }
 
-    public float getScore(List<string> answersP1, List<string> answersP2)
+    public float GetScoreTwoPlayers()
     {
         int correctGuesses = 0;
-        for (int i = 0; i < answersP1.Count; i++)
+        int numberQuestions = answersPlayers.GetLength(0);
+        for (int i = 0; i < numberQuestions; i++)
         {
-            if (answersP1[i] == answersP2[i])
+            
+            if (answersPlayers[i][0] == answersPlayers[i][1])
             {
                 correctGuesses++;
             }
+            
         }
-        return correctGuesses / answersP1.Count;
+        return correctGuesses / numberQuestions * 100.0f;
+    }
+
+    public float[] GetScoreFourPlayers()
+    {
+        float[] scores = new float[2];
+        int correctGuessesPair1 = 0;
+        int correctGuessesPair2 = 0;
+        int numberQuestions = answersPlayers.GetLength(0);
+        for (int i = 0; i < numberQuestions; i++)
+        {
+
+            if (answersPlayers[i][0] == answersPlayers[i][1])
+            {
+                correctGuessesPair1++;
+            }
+            if (answersPlayers[i][2] == answersPlayers[i][3])
+            {
+                correctGuessesPair2++;
+            }
+
+        }
+        scores[0] = correctGuessesPair1 / numberQuestions * 100.0f;
+        scores[1] = correctGuessesPair2 / numberQuestions * 100.0f;
+        return scores; 
     }
 
     public void SaveAnswers(int currentQuestionIndex, int[] choicePlayers) {
