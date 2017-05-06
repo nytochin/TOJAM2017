@@ -6,13 +6,20 @@ using UnityEngine;
 public class QuestionManager : MonoBehaviour {
 
     public List<GameObject> questions;
+    public float[] scores;
 
     private List<GameObject> questionsLeft;
-    private int[][] answersPlayers = null; // [number of questions][number of players]
+    private int[][] answersPlayers; // [number of questions][number of players]
+    private const string ENDGAMETEXT50 = "Congratulations !";
+    private const string ENDGAMETEXT00 = "Loser !";
+
 
     public void InitializeQuestions()
     {
-        questionsLeft = questions;
+        questionsLeft = new List<GameObject>(questions);
+        scores = new float[2];
+        scores[0] = 0.0f;
+        scores[1] = 0.0f;
     }
 
     public void InitializeAnswerArray(int numberGameQuestions, int numberPlayers)
@@ -41,7 +48,7 @@ public class QuestionManager : MonoBehaviour {
     public float GetScoreTwoPlayers()
     {
         int correctGuesses = 0;
-        int numberQuestions = answersPlayers.GetLength(0);
+        int numberQuestions = GameManager.GM.currentQuestionIndex + 1; // because currentQuestionIndex starts at 0
         for (int i = 0; i < numberQuestions; i++)
         {
             
@@ -51,7 +58,7 @@ public class QuestionManager : MonoBehaviour {
             }
             
         }
-        return correctGuesses / numberQuestions * 100.0f;
+        return (float)correctGuesses / numberQuestions * 100.0f;
     }
 
     public float[] GetScoreFourPlayers()
@@ -59,7 +66,7 @@ public class QuestionManager : MonoBehaviour {
         float[] scores = new float[2];
         int correctGuessesPair1 = 0;
         int correctGuessesPair2 = 0;
-        int numberQuestions = answersPlayers.GetLength(0);
+        int numberQuestions = GameManager.GM.currentQuestionIndex + 1; // because currentQuestionIndex starts at 0
         for (int i = 0; i < numberQuestions; i++)
         {
 
@@ -82,6 +89,36 @@ public class QuestionManager : MonoBehaviour {
         for (int i = 0; i < choicePlayers.Length; i++)
         {
             answersPlayers[currentQuestionIndex][i] = choicePlayers[i];
+        }
+    }
+
+    public string GetEndGameTextByScore()
+    {
+        if (GameManager.GM.numberPlayers == 2)
+        {
+            if (scores[0] > 50.0f)
+            {
+                return ENDGAMETEXT50;
+            }
+            else
+            {
+                return ENDGAMETEXT00;
+            }
+        } else if (GameManager.GM.numberPlayers == 4)
+        {
+            return "Four players text not done yet";
+        }
+        return null;
+    }
+
+    public void UpdateScore()
+    {
+        if (GameManager.GM.numberPlayers == 2)
+        {
+            scores[0] = GetScoreTwoPlayers();
+        } else if (GameManager.GM.numberPlayers == 4)
+        {
+            scores = GetScoreFourPlayers();
         }
     }
 }

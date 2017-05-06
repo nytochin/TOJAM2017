@@ -14,11 +14,14 @@ public class GameManager : MonoBehaviour {
     public GameObject questionUI;
     public GameObject answersUI;
     public GameObject scoreUI;
+    public GameObject EndGamePanel;
     public ControllerManager controllerManager;
     public GameObject currentQuestion;
     public int[] choicePlayers;
+    public int currentQuestionIndex;
 
-    private int currentQuestionIndex;
+    private const string STARTGAME = "StartGame";
+    private const string ENDGAME = "EndGame";
 
     public void Awake()
     {
@@ -34,9 +37,17 @@ public class GameManager : MonoBehaviour {
 
     public void Start()
     {
+        // Initialize UI
+        SetUIState(STARTGAME);
+        // Start Game
+        StartQuiz();
+    }
+
+    public void StartQuiz()
+    {
         // Initialize Question Manager
         questionManager.InitializeQuestions();
-        currentQuestionIndex = 0;
+        currentQuestionIndex = -1;
         // Initialize Controller Manager
         controllerManager.SearchForControllers();
         // Initialize choicePlayers array
@@ -47,14 +58,52 @@ public class GameManager : MonoBehaviour {
         DisplayNextQuestion();
     }
 
+    public void SetUIState(string state)
+    {
+        if (state == STARTGAME)
+        {
+            // Activate question UI and answers UI
+            questionUI.SetActive(true);
+            answersUI.SetActive(true);
+            // Activate score UI
+            scoreUI.SetActive(false);
+            EndGamePanel.SetActive(false);
+        } else if (state == ENDGAME)
+        {
+            if (numberPlayers == 2)
+            {
+                // Cheat
+                currentQuestionIndex--;
+                // Deactivate question UI and answers UI
+                questionUI.SetActive(false);
+                answersUI.SetActive(false);
+                // Activate score UI
+                scoreUI.SetActive(true);
+                scoreUI.GetComponentInChildren<Text>().text = "Score : " + questionManager.scores[0]+ "%"; // Two players
+                                                                                                                       // Activate end game panel
+                EndGamePanel.SetActive(true);
+                GameObject endGameText = EndGamePanel.transform.FindChild("EndGameText").gameObject;
+                endGameText.GetComponent<Text>().text = questionManager.GetEndGameTextByScore();
+            } else if (numberPlayers == 4)
+            {
+
+            }
+        }
+    }
+
     public void DisplayNextQuestion()
     {
+        currentQuestionIndex++; // for the first iteration, goes from -1 to 0
         if (currentQuestionIndex < numberGameQuestions)
-        {
+        {           
             currentQuestion = questionManager.GetRandomQuestion();
             QuestionInfo qInfo = currentQuestion.GetComponent<QuestionInfo>();
             // Display the question and the answers in the UI
             questionUI.GetComponentInChildren<Text>().text = qInfo.question;
+            for (int i = 0; i < 4; i++) {
+                GameObject child = answersUI.transform.GetChild(i).gameObject;
+                child.SetActive(false);
+            }
             for (int i = 0; i < qInfo.answers.Length; i++)
             {
                 GameObject child = answersUI.transform.GetChild(i).gameObject;
@@ -64,12 +113,7 @@ public class GameManager : MonoBehaviour {
         } else
         {
             Debug.Log("Game over");
-            // Deactivate question panel and answers panel
-            questionUI.SetActive(false);
-            answersUI.SetActive(false);
-            // Activate score panel
-            scoreUI.SetActive(true);
-            scoreUI.GetComponentInChildren<Text>().text = "Score : " + questionManager.GetScoreTwoPlayers() + "%";
+            SetUIState(ENDGAME);            
         }
     }
 
@@ -78,11 +122,12 @@ public class GameManager : MonoBehaviour {
         if (AllChoicePlayersSelected())
         {
             questionManager.SaveAnswers(currentQuestionIndex, choicePlayers);
+            questionManager.UpdateScore();
+            Debug.Log(questionManager.scores[0]);
             Debug.Log("Choices saved");
             // Animation - put the chairs back to normal
             // ...
-            ResetChoicePlayers();
-            currentQuestionIndex++;
+            ResetChoicePlayers();            
             DisplayNextQuestion();
         }
     }
@@ -90,14 +135,20 @@ public class GameManager : MonoBehaviour {
 
     private bool AllChoicePlayersSelected()
     {
-        for (int i = 0; i < controllerManager.controllersNumber.Length; i++)
+        if (controllerManager.controllersNumber.Length != 0)
         {
-            if (choicePlayers[i] == -1)
+            for (int i = 0; i < controllerManager.controllersNumber.Length; i++)
             {
-                return false;
+                if (choicePlayers[i] == -1)
+                {
+                    return false;
+                }
             }
+            return true;
+        } else
+        {
+            return false;
         }
-        return true;
     }
 
     public void ResetChoicePlayers()
@@ -106,5 +157,10 @@ public class GameManager : MonoBehaviour {
         {
             choicePlayers[i] = -1;
         }
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }
