@@ -25,7 +25,7 @@ public class ControllerManager : MonoBehaviour {
 
     private void Update()
     {
-        if (GameManager.GM.currentQuestion)
+        if (GameManager.GM.currentQuestion && GameManager.GM.answeringState)
         {
             // Wait for input of player 1
             for (int i = 0; i < controllersNumber.Length; i++)

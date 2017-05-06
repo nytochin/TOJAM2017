@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Maksim/Scenes/UI.unity
+- path: Assets/Scenes/Tony.unity
   isLoaded: 1
   isActive: 1

@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48c27e6a75224f4897c5510a10ea772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: Text
+  type: text
   question: Which color do I like the most ?
   answers:
   - Red

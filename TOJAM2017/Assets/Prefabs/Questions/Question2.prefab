@@ -51,7 +51,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 6439cc96d8d16a946a8fe08a95a1573b, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -133,11 +133,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48c27e6a75224f4897c5510a10ea772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: Text
-  question: Are you awesome ?
+  type: audio
+  question: How did this audio sample make you feel ?
   answers:
-  - Yes
-  - No
+  - Sad
+  - Happy
 --- !u!212 &212156652956028566
 SpriteRenderer:
   m_ObjectHideFlags: 1

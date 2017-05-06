@@ -19,9 +19,14 @@ public class GameManager : MonoBehaviour {
     public GameObject currentQuestion;
     public int[] choicePlayers;
     public int currentQuestionIndex;
+    public bool answeringState = false;
 
     private const string STARTGAME = "StartGame";
     private const string ENDGAME = "EndGame";
+    private const string TEXT = "text";
+    private const string AUDIO = "audio";
+    private const string IMAGE = "image";
+    private IEnumerator coroutine;
 
     public void Awake()
     {
@@ -45,6 +50,7 @@ public class GameManager : MonoBehaviour {
 
     public void StartQuiz()
     {
+        answeringState = false;
         // Initialize Question Manager
         questionManager.InitializeQuestions();
         currentQuestionIndex = -1;
@@ -92,35 +98,72 @@ public class GameManager : MonoBehaviour {
     }
 
     public void DisplayNextQuestion()
-    {
+    {        
         currentQuestionIndex++; // for the first iteration, goes from -1 to 0
         if (currentQuestionIndex < numberGameQuestions)
         {           
             currentQuestion = questionManager.GetRandomQuestion();
+            
             QuestionInfo qInfo = currentQuestion.GetComponent<QuestionInfo>();
-            // Display the question and the answers in the UI
-            questionUI.GetComponentInChildren<Text>().text = qInfo.question;
-            for (int i = 0; i < 4; i++) {
-                GameObject child = answersUI.transform.GetChild(i).gameObject;
-                child.SetActive(false);
-            }
-            for (int i = 0; i < qInfo.answers.Length; i++)
+            if (currentQuestion.GetComponent<QuestionInfo>().type == TEXT)
             {
-                GameObject child = answersUI.transform.GetChild(i).gameObject;
-                child.SetActive(true);
-                child.GetComponent<Text>().text = qInfo.answers[i];
-            }
+                // Text type question
+                questionUI.GetComponentInChildren<Text>().text = qInfo.question;
+                for (int i = 0; i < 4; i++)
+                {
+                    GameObject child = answersUI.transform.GetChild(i).gameObject;
+                    child.SetActive(false);
+                }
+                for (int i = 0; i < qInfo.answers.Length; i++)
+                {
+                    GameObject child = answersUI.transform.GetChild(i).gameObject;
+                    child.SetActive(true);
+                    child.GetComponent<Text>().text = qInfo.answers[i];
+                }
+                // Text all displayed : the player can now answer
+                answeringState = true;
+            } else if (currentQuestion.GetComponent<QuestionInfo>().type == AUDIO)
+            {
+                // Audio type question
+                questionUI.GetComponentInChildren<Text>().text = qInfo.question;
+                AudioSource audio = qInfo.GetComponent<AudioSource>();
+                questionManager.GetComponent<AudioSource>().clip = audio.clip;
+                float timeAudio = questionManager.GetComponent<AudioSource>().clip.length + 2.0f;
+                questionManager.GetComponent<AudioSource>().PlayDelayed(1); // Play with one second delay                
+                coroutine = WaitForAudioToEnd(timeAudio, qInfo);
+                StartCoroutine(coroutine);
+            }                    
         } else
         {
+            answeringState = false;
             Debug.Log("Game over");
             SetUIState(ENDGAME);            
         }
     }
 
+    private IEnumerator WaitForAudioToEnd(float timeAudio, QuestionInfo qInfo)
+    {
+        yield return new WaitForSeconds(timeAudio);
+        for (int i = 0; i < 4; i++)
+        {
+            GameObject child = answersUI.transform.GetChild(i).gameObject;
+            child.SetActive(false);
+        }
+        for (int i = 0; i < qInfo.answers.Length; i++)
+        {
+            GameObject child = answersUI.transform.GetChild(i).gameObject;
+            child.SetActive(true);
+            child.GetComponent<Text>().text = qInfo.answers[i];
+        }
+        // Text all displayed : the player can now answer
+        answeringState = true;
+    }
+
     public void Update()
     {
-        if (AllChoicePlayersSelected())
+        if (AllChoicePlayersSelected() && answeringState)
         {
+            answeringState = false;
             questionManager.SaveAnswers(currentQuestionIndex, choicePlayers);
             questionManager.UpdateScore();
             Debug.Log(questionManager.scores[0]);
