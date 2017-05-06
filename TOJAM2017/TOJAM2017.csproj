@@ -85,11 +85,24 @@
     <Compile Include="Assets\Maksim\AmbiancePackage\RandomizePitch.cs" />
     <Compile Include="Assets\Maksim\AmbiancePackage\SelfDestruct.cs" />
     <Compile Include="Assets\Maksim\AmbiancePackage\ShakeCubes.cs" />
+    <Compile Include="Assets\Maksim\noise\ExtraNoiseRotate.cs" />
+    <Compile Include="Assets\Maksim\noise\NoiseTest.cs" />
     <Compile Include="Assets\Scripts\ControllerManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\LoadOnStart.cs" />
     <Compile Include="Assets\Scripts\QuestionInfo.cs" />
     <Compile Include="Assets\Scripts\QuestionManager.cs" />
+    <Compile Include="Assets\StartMain.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Maksim\noise\GLSL\NoiseTest.shader" />
+    <None Include="Assets\Maksim\noise\HLSL\ClassicNoise2D.cginc" />
+    <None Include="Assets\Maksim\noise\HLSL\ClassicNoise3D.cginc" />
+    <None Include="Assets\Maksim\noise\HLSL\NoiseTest.shader" />
+    <None Include="Assets\Maksim\noise\HLSL\SimplexNoise2D.cginc" />
+    <None Include="Assets\Maksim\noise\HLSL\SimplexNoise3D.cginc" />
+    <None Include="Assets\Maksim\noise\HLSL\SimplexNoiseGrad2D.cginc" />
+    <None Include="Assets\Maksim\noise\HLSL\SimplexNoiseGrad3D.cginc" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

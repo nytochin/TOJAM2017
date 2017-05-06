@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour {
     private const string IMAGE = "image";
     private IEnumerator coroutine;
     private float SPEEDTEXT = 0.02f;
+    private AudioSource audioTransition;
+    private AudioSource lightOn;
 
     public void Awake()
     {
@@ -43,8 +45,11 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void Start()
+    public IEnumerator Start()
     {
+        yield return new WaitForSeconds(2.0f);
+        // Deactivate FadeOut
+        GameObject.Find("FadeOut").SetActive(false);
         // Initialize UI
         SetUIState(STARTGAME);
         // Start Game
@@ -52,7 +57,8 @@ public class GameManager : MonoBehaviour {
     }
 
     public void StartQuiz()
-    {
+    {        
+        audioTransition = GetComponent<AudioSource>();
         player1IsGuessing = true;
         answeringState = false;
         // Initialize Question Manager
@@ -231,6 +237,8 @@ public class GameManager : MonoBehaviour {
     {
         if (AllChoicePlayersSelected() && answeringState)
         {
+            audioTransition.Play();
+            audioTransition.SetScheduledEndTime(AudioSettings.dspTime+0.2f);
             answeringState = false;            
             questionManager.SaveAnswers(currentQuestionIndex, choicePlayers, player1IsGuessing);
             questionManager.UpdateScore();
