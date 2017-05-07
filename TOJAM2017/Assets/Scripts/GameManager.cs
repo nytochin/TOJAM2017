@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour {
     public bool answeringState = false;
     public GameObject image;
     public bool player1IsGuessing;
+    public GameObject playAgain;
 
     private const string STARTGAME = "StartGame";
     private const string ENDGAME = "EndGame";
@@ -88,6 +90,9 @@ public class GameManager : MonoBehaviour {
         {
             if (numberPlayers == 2)
             {
+                // EventSystem.current.SetSelectedGameObject(playAgain);
+                StartCoroutine("highlightBtn");
+
                 // Cheat
                 currentQuestionIndex--;
                 // Deactivate question UI and answers UI
@@ -105,6 +110,14 @@ public class GameManager : MonoBehaviour {
                 // TO DO
             }
         }
+    }
+
+    IEnumerator highlightBtn()
+    {
+        EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+        es.SetSelectedGameObject(null);
+        yield return null;
+        es.SetSelectedGameObject(es.firstSelectedGameObject);
     }
 
     public void DisplayNextQuestion()
@@ -177,7 +190,7 @@ public class GameManager : MonoBehaviour {
         {
             GameObject child = answersUI.transform.GetChild(i).gameObject;
             child.SetActive(true);
-            child.GetComponent<Text>().text = qInfo.answers[i];
+            child.GetComponentInChildren<Text>().text = qInfo.answers[i];
         }
         // Text all displayed : the player can now answer
         answeringState = true;
@@ -199,7 +212,7 @@ public class GameManager : MonoBehaviour {
         {
             GameObject child = answersUI.transform.GetChild(i).gameObject;
             child.SetActive(true);
-            child.GetComponent<Text>().text = qInfo.answers[i];
+            child.GetComponentInChildren<Text>().text = qInfo.answers[i];
         }
         // Text all displayed : the player can now answer
         answeringState = true;
@@ -227,7 +240,7 @@ public class GameManager : MonoBehaviour {
         {
             GameObject child = answersUI.transform.GetChild(i).gameObject;
             child.SetActive(true);
-            child.GetComponent<Text>().text = qInfo.answers[i];
+            child.GetComponentInChildren<Text>().text = qInfo.answers[i];
         }
         // Text all displayed : the player can now answer
         answeringState = true;
