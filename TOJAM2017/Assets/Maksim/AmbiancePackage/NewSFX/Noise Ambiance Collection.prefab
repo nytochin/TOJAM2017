@@ -831,6 +831,7 @@ MonoBehaviour:
   noiseWidth: 1.1
   noiseStrength: 0.64
   audIn: {fileID: 114000013338644570}
+  volumeIntensity: 0
 --- !u!114 &114000010799414530
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -845,6 +846,7 @@ MonoBehaviour:
   noiseWidth: 1.5
   noiseStrength: 0.91
   audIn: {fileID: 114000013338644570}
+  volumeIntensity: 0
 --- !u!114 &114000011003818978
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -859,6 +861,7 @@ MonoBehaviour:
   noiseWidth: 1.6
   noiseStrength: 1.21
   audIn: {fileID: 114000013338644570}
+  volumeIntensity: 0
 --- !u!114 &114000012185675846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -873,6 +876,7 @@ MonoBehaviour:
   noiseWidth: 1.7
   noiseStrength: 1.23
   audIn: {fileID: 114000013338644570}
+  volumeIntensity: 0
 --- !u!114 &114000012448977530
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -887,6 +891,7 @@ MonoBehaviour:
   noiseWidth: 1.2
   noiseStrength: 0.7
   audIn: {fileID: 114000013338644570}
+  volumeIntensity: 0
 --- !u!114 &114000012449037876
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -901,6 +906,7 @@ MonoBehaviour:
   noiseWidth: 1.3
   noiseStrength: 0.85
   audIn: {fileID: 114000013338644570}
+  volumeIntensity: 0
 --- !u!114 &114000012766359514
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -915,6 +921,7 @@ MonoBehaviour:
   noiseWidth: 1.4
   noiseStrength: 1.1
   audIn: {fileID: 114000013338644570}
+  volumeIntensity: 0
 --- !u!114 &114000013338644570
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -927,3 +934,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   intensity: 300
+  volIntensity: 0
