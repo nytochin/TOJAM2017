@@ -133,13 +133,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48c27e6a75224f4897c5510a10ea772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: text
-  question: What is the most fun thing to do ?
+  type: image
+  question: How does this make you feel...?
   answers:
-  - 'Eating '
-  - Playing video games
-  - Going on a trip
-  - Chill and Netflix
+  - Small
+  - Hopeful
+  - Imaginative
+  - Nostalgic
 --- !u!212 &212156652956028566
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -172,11 +172,11 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 025c68abd6581664eb84d3de0b88b1fb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.048, y: 2.048}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0

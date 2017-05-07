@@ -134,12 +134,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: image
-  question: What do you see in this image ?
+  question: What does this make you think of...?
   answers:
-  - My tiger mom
-  - Your p
-  - Dog
-  - Snake
+  - Inevitability
+  - Infinity
+  - Life
+  - Futility
 --- !u!212 &212156652956028566
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -172,7 +172,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c026f95cc13dad44999b4a83a7daf582, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 409e076d46ae6984ab11f26acaeb5b19, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
