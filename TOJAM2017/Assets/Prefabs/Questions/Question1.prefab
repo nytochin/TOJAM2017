@@ -134,12 +134,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: text
-  question: Which color do I like the most ?
+  question: What is the most fun thing to do ?
   answers:
-  - Red
-  - Green
-  - Pineapple
-  - Starbucks
+  - 'Eating '
+  - Playing video games
+  - Going on a trip
+  - Chill and Netflix
 --- !u!212 &212156652956028566
 SpriteRenderer:
   m_ObjectHideFlags: 1

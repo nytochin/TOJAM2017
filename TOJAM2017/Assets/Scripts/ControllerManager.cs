@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using XInputDotNetPure;
 
 public class ControllerManager : MonoBehaviour {
 
     public int[] controllersNumber;
+
+    private float remainingTime;
 
     public void SearchForControllers()
     {
@@ -27,7 +30,7 @@ public class ControllerManager : MonoBehaviour {
     {
         if (GameManager.GM.currentQuestion && GameManager.GM.answeringState)
         {
-            // Wait for input of player 1
+            // Wait for input of players
             for (int i = 0; i < controllersNumber.Length; i++)
             {
                 if (GameManager.GM.choicePlayers[i] == -1)
@@ -83,5 +86,30 @@ public class ControllerManager : MonoBehaviour {
                 }
             }
         }
+        if (GameManager.GM.answeringState && GameManager.GM.player1IsGuessing)
+        {
+            VibrateController(0, 1, 0.15f);
+        } else if (GameManager.GM.answeringState && !GameManager.GM.player1IsGuessing)
+        {
+            VibrateController(1, 1, 0.15f);
+        }
+    }
+
+    public void VibrateController(int controllerNumber, float duration, float intensity)
+    {
+        remainingTime = duration;
+        StartCoroutine(vibrate(controllerNumber, intensity));
+    }
+
+    private IEnumerator vibrate(int controllerNumber, float intensity)
+    {
+        while (remainingTime > 0)
+        {
+            yield return 0;
+
+            remainingTime -= Time.deltaTime;
+            GamePad.SetVibration((PlayerIndex)controllerNumber, intensity, intensity);
+        }
+        GamePad.SetVibration((PlayerIndex)controllerNumber, 0, 0);
     }
 }

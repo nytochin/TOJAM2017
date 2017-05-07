@@ -136,8 +136,8 @@ MonoBehaviour:
   type: image
   question: What do you see in this image ?
   answers:
-  - Baby
-  - Cat
+  - My tiger mom
+  - Your p
   - Dog
   - Snake
 --- !u!212 &212156652956028566

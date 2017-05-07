@@ -134,10 +134,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: text
-  question: Are you awesome ?
+  question: Cat or Dog ?
   answers:
-  - Yes
-  - No
+  - Cat
+  - Dog
 --- !u!212 &212156652956028566
 SpriteRenderer:
   m_ObjectHideFlags: 1
