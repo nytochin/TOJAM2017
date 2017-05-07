@@ -10,8 +10,8 @@ public class AudioOscilator : MonoBehaviour {
     private float currentIntensity;
     private AudioSource currentAudioSource;
     public AudioIntensity audIn;
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         goingUp = true;
         oscilPos = 0;
 
@@ -40,7 +40,7 @@ public class AudioOscilator : MonoBehaviour {
         {
             goingUp = true;
         }
-        currentAudioSource.volume = 1f * audIn.intensity * 0.0002f;
+        currentAudioSource.volume = 1f * audIn.intensity * audIn.volIntensity * 0.0001f;
        
     }
 }

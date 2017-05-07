@@ -11,19 +11,17 @@ public class AudioNoiseMaker : MonoBehaviour {
     private AudioSource currentAudioSource;
     private float noisePos;
     public AudioIntensity audIn;
+    public float volumeIntensity;
     // Use this for initialization
     void Start()
     {
         goingUp = true;
         noisePos = 0;
-
-
     }
 
     // Update is called once per frame
     void Update()
     {
-
         currentIntensity = audIn.intensity / 4f;
         currentAudioSource = gameObject.GetComponent<AudioSource>();
         noisePos += Time.deltaTime;
@@ -33,6 +31,6 @@ public class AudioNoiseMaker : MonoBehaviour {
             currentAudioSource.pitch = 1 + noiseStrength * 0.1f * currentIntensity * (UnityEngine.Random.value * 2 - 1);
         }
 
-        currentAudioSource.volume = 1f * audIn.intensity * 0.0002f;
+        currentAudioSource.volume = 1f * audIn.intensity * audIn.volIntensity * 0.0001f;
     }
 }
