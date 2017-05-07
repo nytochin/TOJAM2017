@@ -24,6 +24,10 @@ public class GameManager : MonoBehaviour {
     public GameObject image;
     public bool player1IsGuessing;
     public GameObject playAgain;
+    public GameObject chairPlayer1;
+    public GameObject chairPlayer2;
+    public GameObject chairPlayerStatic1;
+    public GameObject chairPlayerStatic2;
 
     private const string STARTGAME = "StartGame";
     private const string ENDGAME = "EndGame";
@@ -59,7 +63,12 @@ public class GameManager : MonoBehaviour {
     }
 
     public void StartQuiz()
-    {        
+    {
+        // Initialize chairs state
+        chairPlayer1.SetActive(true);
+        chairPlayer2.SetActive(true);
+        chairPlayerStatic1.SetActive(false);
+        chairPlayerStatic2.SetActive(false);
         audioTransition = GetComponent<AudioSource>();
         player1IsGuessing = true;
         answeringState = false;
@@ -91,7 +100,7 @@ public class GameManager : MonoBehaviour {
             if (numberPlayers == 2)
             {
                 // EventSystem.current.SetSelectedGameObject(playAgain);
-                StartCoroutine("highlightBtn");
+                StartCoroutine("HighlightBtn");
 
                 // Cheat
                 currentQuestionIndex--;
@@ -112,7 +121,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    IEnumerator highlightBtn()
+    IEnumerator HighlightBtn()
     {
         EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
         es.SetSelectedGameObject(null);
@@ -124,6 +133,10 @@ public class GameManager : MonoBehaviour {
     {
         if (player1IsGuessing)
         {
+            chairPlayer1.SetActive(true);
+            chairPlayer2.SetActive(false);
+            chairPlayerStatic1.SetActive(false);
+            chairPlayerStatic2.SetActive(true);
             currentQuestionIndex++; // for the first iteration, goes from -1 to 0 - go to next question if turn of player 1 again
             currentQuestion = questionManager.GetRandomQuestion();
 
@@ -145,7 +158,6 @@ public class GameManager : MonoBehaviour {
                     coroutine = Text(qInfo);
                     StartCoroutine(coroutine);
                     //questionUI.GetComponentInChildren<Text>().text = qInfo.question;
-
                 }
                 else if (currentQuestion.GetComponent<QuestionInfo>().type == AUDIO)
                 {
@@ -163,12 +175,20 @@ public class GameManager : MonoBehaviour {
             else
             {
                 answeringState = false;
+                chairPlayer1.SetActive(false);
+                chairPlayer2.SetActive(false);
+                chairPlayerStatic1.SetActive(true);
+                chairPlayerStatic2.SetActive(true);
                 Debug.Log("Game over");
                 SetUIState(ENDGAME);
             }
         }  else
         {
             answeringState = true;
+            chairPlayer1.SetActive(false);
+            chairPlayer2.SetActive(true);
+            chairPlayerStatic1.SetActive(true);
+            chairPlayerStatic2.SetActive(false);
         }    
     }
 
@@ -177,10 +197,7 @@ public class GameManager : MonoBehaviour {
         foreach (char letter in qInfo.question.ToCharArray())
         {
             questionUI.GetComponentInChildren<Text>().text += letter;
-            //if (typeSound1 && typeSound2)
-            //{
-            //    SoundManager.instance.RandomizeSfx(typeSound1, typeSound2);
-            //}
+
             yield return 0;
             yield return new WaitForSeconds(SPEEDTEXT);
         }
@@ -224,10 +241,6 @@ public class GameManager : MonoBehaviour {
         foreach (char letter in qInfo.question.ToCharArray())
         {
             questionUI.GetComponentInChildren<Text>().text += letter;
-            //if (typeSound1 && typeSound2)
-            //{
-            //    SoundManager.instance.RandomizeSfx(typeSound1, typeSound2);
-            //}
             yield return 0;
             yield return new WaitForSeconds(SPEEDTEXT);
         }

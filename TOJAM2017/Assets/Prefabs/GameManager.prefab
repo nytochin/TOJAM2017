@@ -134,7 +134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberPlayers: 2
   questionManager: {fileID: 0}
-  numberGameQuestions: 3
+  numberGameQuestions: 1
   questionUI: {fileID: 0}
   answersUI: {fileID: 0}
   scoreUI: {fileID: 0}
@@ -146,3 +146,4 @@ MonoBehaviour:
   answeringState: 0
   image: {fileID: 0}
   player1IsGuessing: 0
+  playAgain: {fileID: 0}
