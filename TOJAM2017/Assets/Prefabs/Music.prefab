@@ -1711,6 +1711,7 @@ MonoBehaviour:
   noiseWidth: 1.4
   noiseStrength: 0.44
   audIn: {fileID: 114374093451258300}
+  volumeIntensity: 0
 --- !u!114 &114130601581795044
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1725,6 +1726,7 @@ MonoBehaviour:
   noiseWidth: 1.7
   noiseStrength: 0.47
   audIn: {fileID: 114374093451258300}
+  volumeIntensity: 0
 --- !u!114 &114156426927973818
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1739,6 +1741,7 @@ MonoBehaviour:
   noiseWidth: 1.1
   noiseStrength: 0.41
   audIn: {fileID: 114374093451258300}
+  volumeIntensity: 0
 --- !u!114 &114165845790737236
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1751,6 +1754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   intensity: 300
+  volIntensity: 50
 --- !u!114 &114299218216593856
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1765,6 +1769,7 @@ MonoBehaviour:
   noiseWidth: 1.5
   noiseStrength: 0.45
   audIn: {fileID: 114374093451258300}
+  volumeIntensity: 0
 --- !u!114 &114374093451258300
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1777,6 +1782,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   intensity: 300
+  volIntensity: 20
 --- !u!114 &114435985302202790
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1819,6 +1825,7 @@ MonoBehaviour:
   noiseWidth: 1.6
   noiseStrength: 0.46
   audIn: {fileID: 114374093451258300}
+  volumeIntensity: 0
 --- !u!114 &114577895420991526
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1879,7 +1886,7 @@ MonoBehaviour:
   - {fileID: 82118687737336804, guid: 3034913d2ab1e6c4884b9765c5a00e67, type: 2}
   - {fileID: 82751236347312606, guid: a0871a44fa6ae7242ba1c36d43c893d6, type: 2}
   - {fileID: 82427656089580128, guid: 351e8822050e70c45a424b9606c50e5a, type: 2}
-  intensity: 2
+  intensity: 7
 --- !u!114 &114918360208455056
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1894,6 +1901,7 @@ MonoBehaviour:
   noiseWidth: 1.2
   noiseStrength: 0.42
   audIn: {fileID: 114374093451258300}
+  volumeIntensity: 0
 --- !u!114 &114919589908042294
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1922,3 +1930,4 @@ MonoBehaviour:
   noiseWidth: 1.3
   noiseStrength: 0.43
   audIn: {fileID: 114374093451258300}
+  volumeIntensity: 0

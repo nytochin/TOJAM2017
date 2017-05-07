@@ -199,7 +199,7 @@ public class GameManager : MonoBehaviour {
     private IEnumerator Text(QuestionInfo qInfo)
     {
         foreach (char letter in qInfo.question.ToCharArray())
-        {
+{
             questionUI.GetComponentInChildren<Text>().text += letter;
             //if (typeSound1 && typeSound2)
             //{

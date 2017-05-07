@@ -81,18 +81,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Maksim\AmbiancePackage\AudioIntensity.cs" />
-    <Compile Include="Assets\Maksim\AmbiancePackage\AudioNoiseMaker.cs" />
-    <Compile Include="Assets\Maksim\AmbiancePackage\AudioOscilator.cs" />
-    <Compile Include="Assets\Maksim\AmbiancePackage\ClipGenerator.cs" />
-    <Compile Include="Assets\Maksim\AmbiancePackage\RandomizePitch.cs" />
-    <Compile Include="Assets\Maksim\AmbiancePackage\SelfDestruct.cs" />
-    <Compile Include="Assets\Maksim\AmbiancePackage\ShakeCubes.cs" />
+    <Compile Include="Assets\Maksim\AmbiancePackage\NewSFX\AudioIntensity.cs" />
+    <Compile Include="Assets\Maksim\AmbiancePackage\NewSFX\AudioNoiseMaker.cs" />
+    <Compile Include="Assets\Maksim\AmbiancePackage\NewSFX\AudioOscilator.cs" />
+    <Compile Include="Assets\Maksim\AmbiancePackage\NewSFX\ClipGenerator.cs" />
+    <Compile Include="Assets\Maksim\AmbiancePackage\NewSFX\RandomizePitch.cs" />
+    <Compile Include="Assets\Maksim\AmbiancePackage\NewSFX\SelfDestruct.cs" />
+    <Compile Include="Assets\Maksim\AmbiancePackage\NewSFX\ShakeCubes.cs" />
     <Compile Include="Assets\Maksim\noise\ExtraNoiseRotate.cs" />
     <Compile Include="Assets\Maksim\noise\NoiseTest.cs" />
     <Compile Include="Assets\Scripts\ControllerManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\HeartbeatSound.cs" />
     <Compile Include="Assets\Scripts\LoadOnStart.cs" />
+    <Compile Include="Assets\Scripts\MenuManager.cs" />
     <Compile Include="Assets\Scripts\QuestionInfo.cs" />
     <Compile Include="Assets\Scripts\QuestionManager.cs" />
     <Compile Include="Assets\Scripts\StartMain.cs" />
