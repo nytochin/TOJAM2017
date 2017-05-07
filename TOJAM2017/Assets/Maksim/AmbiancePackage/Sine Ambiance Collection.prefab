@@ -829,7 +829,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oscilWidth: 0.0052
-  oscilStrength: 0.012
+  oscilStrength: 0.23
   audIn: {fileID: 114000010994681470}
 --- !u!114 &114000010994681470
 MonoBehaviour:
@@ -855,7 +855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oscilWidth: 0.0058
-  oscilStrength: 0.018
+  oscilStrength: 0.35
   audIn: {fileID: 114000010994681470}
 --- !u!114 &114000011714606682
 MonoBehaviour:
@@ -869,7 +869,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oscilWidth: 0.0053
-  oscilStrength: 0.013
+  oscilStrength: 0.26
   audIn: {fileID: 114000010994681470}
 --- !u!114 &114000011835933210
 MonoBehaviour:
@@ -883,7 +883,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oscilWidth: 0.0057
-  oscilStrength: 0.017
+  oscilStrength: 0.35
   audIn: {fileID: 114000010994681470}
 --- !u!114 &114000013079196022
 MonoBehaviour:
@@ -897,7 +897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oscilWidth: 0.0054
-  oscilStrength: 0.014
+  oscilStrength: 0.36
   audIn: {fileID: 114000010994681470}
 --- !u!114 &114000013322512130
 MonoBehaviour:
@@ -911,7 +911,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oscilWidth: 0.0051
-  oscilStrength: 0.011
+  oscilStrength: 0.3
   audIn: {fileID: 114000010994681470}
 --- !u!114 &114000013353271396
 MonoBehaviour:
@@ -925,5 +925,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oscilWidth: 0.0056
-  oscilStrength: 0.016
+  oscilStrength: 0.27
   audIn: {fileID: 114000010994681470}

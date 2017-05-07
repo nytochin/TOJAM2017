@@ -299,7 +299,7 @@ Prefab:
       objectReference: {fileID: 740933272}
     - target: {fileID: 1307018603547172, guid: 20f4a5dc49c851740b4de1db765290ea, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 20f4a5dc49c851740b4de1db765290ea, type: 2}
@@ -1746,12 +1746,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 24b1b146eec460446919f2a40e6bcb81, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.61, y: 2.81}
+  m_Size: {x: 4.8, y: 2.62}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
 --- !u!1001 &2094650632
