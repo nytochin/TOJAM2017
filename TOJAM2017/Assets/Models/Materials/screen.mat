@@ -8,8 +8,8 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: screen
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
+  m_ShaderKeywords: _EMISSION
+  m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -35,12 +35,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1.8, y: 3.2}
-        m_Offset: {x: -2, y: -0.59}
+        m_Scale: {x: 1.8, y: 3}
+        m_Offset: {x: -1.985, y: -0.52}
     - _MainTex:
         m_Texture: {fileID: 8400000, guid: e4c0040895c4d4847b38e896b63cde82, type: 2}
-        m_Scale: {x: 1.8, y: 3.2}
-        m_Offset: {x: -2, y: -0.59}
+        m_Scale: {x: 1.8, y: 3}
+        m_Offset: {x: -1.985, y: -0.52}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -72,4 +72,4 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 0.107, g: 0.107, b: 0.107, a: 1}
