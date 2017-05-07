@@ -88,10 +88,10 @@ public class ControllerManager : MonoBehaviour {
         }
         if (GameManager.GM.answeringState && GameManager.GM.player1IsGuessing)
         {
-            VibrateController(0, 1, 0.15f);
+            VibrateController(0, Time.deltaTime, 0.15f);
         } else if (GameManager.GM.answeringState && !GameManager.GM.player1IsGuessing)
         {
-            VibrateController(1, 1, 0.15f);
+            VibrateController(1, Time.deltaTime, 0.15f);
         }
     }
 
