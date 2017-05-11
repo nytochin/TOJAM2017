@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Menu_TV.unity
+- path: Assets/Scenes/TonyMarc.unity
   isLoaded: 1
   isActive: 1

@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: image
-  question: How does this make you feel...?
+  question: How does this make you feel ?
   answers:
   - Small
   - Hopeful

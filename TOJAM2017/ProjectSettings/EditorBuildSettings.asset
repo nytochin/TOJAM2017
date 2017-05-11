@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
-    guid: d5bff452d802def43b475a02a96c2c05
+    path: Assets/Scenes/Menu_TV.unity
+    guid: 36afd07d4080810439e42917553be232
   - enabled: 1
-    path: Assets/Scenes/Tony.unity
+    path: Assets/Scenes/TonyMarc.unity
     guid: 00000000000000000000000000000000
